@@ -18,12 +18,8 @@ resource "azurerm_storage_account" "source" {
   enable_https_traffic_only = true
 
   network_rules {
-    default_action = "Deny"
-    bypass         = ["AzureServices"]
-  }
-
-  network_rules {
-    default_action             = "Allow"
+    default_action             = "Deny"
+    bypass                     = ["AzureServices"]
     virtual_network_subnet_ids = [azurerm_subnet.storage.id]
   }
 
