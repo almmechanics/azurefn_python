@@ -13,8 +13,7 @@ stages:
   jobs:
   - job: Build
     displayName: 'Create app_service artifact'
-    pool: 
-      vmImage: 'windows-latest'
+    pool: private
     steps:
     - publish: $(System.DefaultWorkingDirectory)/app_service
       artifact: drop
@@ -28,7 +27,7 @@ stages:
   - deployment: dev
     environment: dev
     pool: 
-      vmImage: 'windows-latest'
+      name: private
     strategy: 
       runOnce:
         preDeploy:
