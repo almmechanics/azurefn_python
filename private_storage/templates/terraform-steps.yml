@@ -1,0 +1,52 @@
+parameters:
+- name: 'backendServiceArm'  # $(Subscription)
+  type: string
+- name: 'workingDirectory'  # $(Pipeline.Workspace)/drop
+  type: string
+- name: 'environment'  # 'dev'
+  type: string
+- name: 'backendAzureRmResourceGroupName' # $(Tf.ResourceGroup)
+  type: string
+- name: 'backendAzureRmStorageAccountName' # $(Tf.StorageAccount)
+  type: string
+- name: 'backendAzureRmContainerName' # $(Tf.Container)
+  type: string
+- name: 'statefileContext' # $(Tf.Statefile)
+  type: string
+
+
+
+steps:
+- task: TerraformInstaller@0
+  displayName: 'terraform installer'
+  inputs:
+    terraformVersion: 0.12.23
+
+- task: TerraformTaskV1@0
+  displayName: 'terraform init'
+  inputs:
+    command: 'init'
+    workingDirectory:  ${{parameters.workingDirectory}}
+    backendServiceArm: ${{parameters.backendServiceArm}}
+    backendAzureRmResourceGroupName: ${{parameters.backendAzureRmResourceGroupName}}
+    backendAzureRmStorageAccountName: ${{parameters.backendAzureRmStorageAccountName}}
+    backendAzureRmContainerName: ${{parameters.backendAzureRmContainerName}}
+    backendAzureRmKey: ${{parameters.statefileContext}}_${{parameters.environment}}_terraform.state
+
+- task: TerraformTaskV1@0
+  displayName: 'terraform plan'
+  inputs:
+    provider: 'azurerm'
+    environmentServiceNameAzureRM: ${{parameters.backendServiceArm}}
+    command: 'plan'
+    commandOptions: '-var-file=${{parameters.environment}}/config.tfvars -var=environment_name=${{parameters.environment}} -out=${{parameters.environment}}.tfplan'
+    workingDirectory:  ${{parameters.workingDirectory}}
+
+- task: TerraformTaskV1@0
+  displayName: 'terraform apply'
+  inputs:
+    provider: 'azurerm'
+    environmentServiceNameAzureRM: ${{parameters.backendServiceArm}}
+    command: 'apply'
+    commandOptions: '${{parameters.environment}}.tfplan'
+    workingDirectory:  ${{parameters.workingDirectory}}

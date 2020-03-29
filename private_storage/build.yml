@@ -1,0 +1,49 @@
+name:  $(TeamProject)_$(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)  
+
+trigger:
+- master
+
+variables:
+  StatefileContext: $(System.TeamProject)_$(Build.DefinitionName)_$(Build.Repository.Name)_$(Build.SourceBranchName)
+  Subscription: AzureSP
+
+stages:
+- stage: CI
+  displayName: 'Build'
+  jobs:
+  - job: Build
+    displayName: 'Create build artifact'
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - publish: $(System.DefaultWorkingDirectory)
+      artifact: drop
+
+- stage: dev  
+  displayName: 'deploy dev'
+  variables:
+  - group: dev-variables
+
+  jobs:
+  - deployment: dev
+    environment: dev
+    pool: 
+      vmImage: 'windows-latest'
+    strategy: 
+      runOnce:
+        preDeploy:
+          steps:
+          - download: current
+            artifact: drop
+
+        deploy:
+          steps:
+          - template: templates/terraform-steps.yml
+            parameters:
+              backendServiceArm: $(Subscription)
+              workingDirectory: $(Pipeline.Workspace)/drop
+              backendAzureRmResourceGroupName: $(Tf.ResourceGroup)
+              backendAzureRmStorageAccountName: $(Tf.StorageAccount)
+              backendAzureRmContainerName: $(Tf.Container)
+              environment: 'dev'
+              statefileContext: $(StatefileContext)
