@@ -1,8 +1,3 @@
-variable "environment_name" {
-  description = "my environment name"
-  type        = string
-}
-
 variable "location" {
   description = "deployment location"
   type        = string
@@ -11,6 +6,11 @@ variable "location" {
 variable "environment_name" {
   description = "environment name"
   type        = string
+}
+
+variable "vnet_cidr" {
+  type        = string
+  description = "VPC cidr block. Example: 10.10.0.0/16"
 }
 
 variable "instance" {
