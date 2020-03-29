@@ -13,8 +13,7 @@ stages:
   jobs:
   - job: Build
     displayName: 'Create storage artifact'
-    pool: 
-      name: 'private'
+    pool: private
     steps:
     - publish: $(System.DefaultWorkingDirectory)/private_storage
       artifact: drop
@@ -27,8 +26,7 @@ stages:
   jobs:
   - deployment: dev
     environment: dev
-      pool: 
-        name: 'private'
+      pool: private
     strategy: 
       runOnce:
         preDeploy:
