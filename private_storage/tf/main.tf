@@ -13,8 +13,8 @@ resource "random_string" "random" {
   upper   = false
 }
 
-resource "azurerm_resource_group" "app_service" {
-  name     = format("rg_%s_%s_%03s", var.environment_name, random_string.random.result, var.instance)
+resource "azurerm_resource_group" "source" {
+  name     = format("rg_storage_%s_%s_%03s", var.environment_name, random_string.random.result, var.instance)
   location = var.location
 
   tags = {

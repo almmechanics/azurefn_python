@@ -12,11 +12,11 @@ stages:
   displayName: 'Build'
   jobs:
   - job: Build
-    displayName: 'Create build artifact'
+    displayName: 'Create storage artifact'
     pool: 
       vmImage: 'windows-latest'
     steps:
-    - publish: $(System.DefaultWorkingDirectory)
+    - publish: $(System.DefaultWorkingDirectory)/private_storage
       artifact: drop
 
 - stage: dev  
@@ -41,7 +41,7 @@ stages:
           - template: templates/terraform-steps.yml
             parameters:
               backendServiceArm: $(Subscription)
-              workingDirectory: $(Pipeline.Workspace)/drop/tf/app_service
+              workingDirectory: $(Pipeline.Workspace)/drop/tf
               backendAzureRmResourceGroupName: $(Tf.ResourceGroup)
               backendAzureRmStorageAccountName: $(Tf.StorageAccount)
               backendAzureRmContainerName: $(Tf.Container)
