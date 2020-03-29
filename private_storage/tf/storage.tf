@@ -34,7 +34,7 @@ resource "azurerm_storage_account" "source" {
 }
 
 resource "azurerm_storage_container" "source" {
-  container_access_type = "private"
-  storage_account_name = azurerm_storage_account.source.name
-  name                 = "source"
+  storage_account_name  = azurerm_storage_account.source.name
+  name                  = "source"
+  container_access_type = "blob"
 }
