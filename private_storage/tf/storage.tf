@@ -23,6 +23,10 @@ resource "azurerm_storage_account" "source" {
     virtual_network_subnet_ids = [azurerm_subnet.storage.id]
   }
 
+  depends_on = [
+    azurerm_subnet.storage,
+  ]
+
   tags = {
     environment = var.environment_name
     instance    = var.instance

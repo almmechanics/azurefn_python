@@ -37,7 +37,7 @@ stages:
 
         deploy:
           steps:
-          - template: templates/terraform-steps.yml
+          - template: ../templates/terraform-steps.yml
             parameters:
               backendServiceArm: $(Subscription)
               workingDirectory: $(Pipeline.Workspace)/drop/tf
