@@ -26,8 +26,8 @@ stages:
   jobs:
   - deployment: dev
     environment: dev
-      pool: 
-        name: private
+    pool: 
+      name: private
     strategy: 
       runOnce:
         preDeploy:
