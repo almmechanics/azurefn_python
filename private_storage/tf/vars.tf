@@ -1,9 +1,19 @@
-variable "string_length" {
-  description = "length of random string"
+variable "environment_name" {
+  description = "my environment name"
+  type        = string
+}
+
+variable "location" {
+  description = "deployment location"
   type        = string
 }
 
 variable "environment_name" {
-  description = "my environment name"
+  description = "environment name"
+  type        = string
+}
+
+variable "instance" {
+  description = "instance id"
   type        = string
 }
