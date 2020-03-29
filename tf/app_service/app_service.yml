@@ -41,7 +41,7 @@ stages:
           - template: templates/terraform-steps.yml
             parameters:
               backendServiceArm: $(Subscription)
-              workingDirectory: $(Pipeline.Workspace)/drop
+              workingDirectory: $(Pipeline.Workspace)/drop/tf/app_service
               backendAzureRmResourceGroupName: $(Tf.ResourceGroup)
               backendAzureRmStorageAccountName: $(Tf.StorageAccount)
               backendAzureRmContainerName: $(Tf.Container)
