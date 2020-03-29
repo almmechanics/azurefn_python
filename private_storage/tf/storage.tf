@@ -3,7 +3,6 @@ resource "azurerm_subnet" "storage" {
   resource_group_name  = azurerm_resource_group.source.name
   virtual_network_name = azurerm_virtual_network.source.name
   address_prefix       = cidrsubnet(var.vnet_cidr, 8, 2)
-  service_endpoints    = ["Microsoft.Storage"]
 }
 
 
