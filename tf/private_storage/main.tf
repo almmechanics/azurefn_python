@@ -2,6 +2,11 @@ terraform {
   backend "azurerm" {}
 }
 
+provider "azurerm" {
+  version = "=2.3.0"
+  features {}
+}
+
 resource "random_string" "random" {
   length  = 8
   special = false
