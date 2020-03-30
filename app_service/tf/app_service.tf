@@ -31,10 +31,7 @@ resource "azurerm_function_app" "app_service" {
     SHARED_ACCESS_SIGNATURE     = "SharedAccessSignature=${data.azurerm_storage_account_sas.source.sas};BlobEndpoint=https://${data.azurerm_storage_account.source.name}.blob.core.windows.net/;"
     FUNCTIONS_EXTENSION_VERSION = "~3"
     FUNCTIONS_WORKER_RUNTIME    = "python"
-    site_config {
-    dotnet_framework_version = "v4.0"
-    scm_type                 = "LocalGit"
-  }           = data.azurerm_storage_account.source.primary_connection_string
+    CONNECTION_STRING           = data.azurerm_storage_account.source.primary_connection_string
   }
 
   site_config {
