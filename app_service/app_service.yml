@@ -6,6 +6,7 @@ trigger:
 variables:
   StatefileContext: $(System.TeamProject)_$(Build.DefinitionName)_$(Build.Repository.Name)_$(Build.SourceBranchName)
   Subscription: AzureSP
+  appName: HttpTrigger1
 
 stages:
 - stage: CI
@@ -51,3 +52,27 @@ stages:
               backendAzureRmContainerName: $(Tf.Container)
               environment: 'dev'
               statefileContext: $(StatefileContext)
+
+          - task: raul-arrieta.terraform-outputs.terraform-outputs.terraform-outputs@0
+            displayName: 'Terraform Outputs'
+            inputs:
+              workingDirectory: $(Pipeline.Workspace)/drop/tf
+              variablePrefix: tf.
+
+          - task: AzureFunctionApp@1 # Add this at the end of your file
+            inputs:
+              azureSubscription: $(Subscription)
+              appType: functionAppLinux
+              appName: $(appName)
+              package: $(System.ArtifactsDirectory)/**/*.zip
+              deployToSlotOrASE: true
+              resourceGroupName: $(tf.resource_group_name)
+              slotName: staging
+
+          - task: AzureAppServiceManage@0
+            inputs:
+              azureSubscription: $(Subscription)
+              WebAppName: $(appName)
+              ResourceGroupName: $(tf.resource_group_name)
+              SourceSlot: staging
+              SwapWithProduction: true
