@@ -19,7 +19,6 @@ resource "azurerm_app_service_plan" "app_service" {
   }
 }
 
-
 resource "azurerm_function_app" "app_service" {
   name                      = format("azure-function-%s-%s-%03s", var.environment_name, random_string.random.result, var.instance)
   resource_group_name       = azurerm_resource_group.app_service.name
