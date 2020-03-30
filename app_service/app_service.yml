@@ -6,7 +6,6 @@ trigger:
 variables:
   StatefileContext: $(System.TeamProject)_$(Build.DefinitionName)_$(Build.Repository.Name)_$(Build.SourceBranchName)
   Subscription: AzureSP
-  appName: HttpTrigger1
 
 stages:
 - stage: CI
@@ -63,7 +62,7 @@ stages:
             inputs:
               azureSubscription: $(Subscription)
               appType: functionAppLinux
-              appName: $(appName)
+              appName: $(tf.app_name)
               package: $(System.ArtifactsDirectory)/**/*.zip
               deployToSlotOrASE: true
               resourceGroupName: $(tf.resource_group_name)
@@ -72,7 +71,7 @@ stages:
           - task: AzureAppServiceManage@0
             inputs:
               azureSubscription: $(Subscription)
-              WebAppName: $(appName)
+              WebAppName: $(tf.app_name)
               ResourceGroupName: $(tf.resource_group_name)
               SourceSlot: staging
               SwapWithProduction: true
