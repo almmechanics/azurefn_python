@@ -15,11 +15,25 @@ stages:
     displayName: 'Create app_service artifact'
     pool: private
     steps:
+    - script: 'pip install pytest pylint'
+      displayName: 'Add PyTest and pylint'
+      continueOnError: true
+
+    - script: 'pytest -rs $(System.DefaultWorkingDirectory)/ci/test_file_has_no_pylint_errors.py --junitxml=$(System.DefaultWorkingDirectory)/test-pylint.xml'
+      displayName: 'Run Pytest extract'
+      continueOnError: true
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results **/TEST-*.xml'
+      inputs:
+        failTaskOnFailedTests: true
+
     - task: ArchiveFiles@2
       inputs:
-       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app_service/python'
-       includeRootFolder: false
-       archiveFile: $(System.DefaultWorkingDirectory)/app_service/azure_function.zip  
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app_service/python'
+        includeRootFolder: false
+        archiveFile: $(System.DefaultWorkingDirectory)/app_service/azure_function.zip  
+
     - publish: $(System.DefaultWorkingDirectory)/app_service
       artifact: drop
 
