@@ -63,7 +63,7 @@ stages:
               azureSubscription: $(Subscription)
               appType: functionAppLinux
               appName: $(tf.app_name)
-              package: $(System.ArtifactsDirectory)/**/*.zip
+              package: $(Pipeline.Workspace)/**/*.zip
               deployToSlotOrASE: true
               resourceGroupName: $(tf.resource_group_name)
               slotName: staging
