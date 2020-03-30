@@ -58,17 +58,26 @@ stages:
               workingDirectory: $(Pipeline.Workspace)/drop/tf
               variablePrefix: tf.
 
-          - task: AzureFunctionApp@1 
+          # - task: AzureFunctionApp@1 
+          #   inputs:
+          #     azureSubscription: $(Subscription)
+          #     appType: functionAppLinux
+          #     appName: $(tf.app_name)
+          #     package: $(Pipeline.Workspace)/drop/azure_function.zip
+          #     deployToSlotOrASE: false
+          #     resourceGroupName: $(tf.resource_group_name)
+
+
+          # Deploy using Azure App Service Deploy - Webdeployment
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Azure App Service Deploy: python'
             inputs:
               azureSubscription: $(Subscription)
               appType: functionAppLinux
-              appName: $(tf.app_name)
-              package: $(Pipeline.Workspace)/drop/azure_function.zip
-              deployToSlotOrASE: false
-              resourceGroupName: $(tf.resource_group_name)
-
-          - task: AzureAppServiceManage@0
-            inputs:
-              azureSubscription: $(Subscription)
-              WebAppName: $(tf.app_name)
-              ResourceGroupName: $(tf.resource_group_name)
+              WebAppName:  $(tf.app_name)
+              packageForLinux: $(Pipeline.Workspace)/drop/azure_function.zip
+              enableCustomDeployment: true
+              DeploymentType: runFromZip    
+              TakeAppOfflineFlag: false
+              ExcludeFilesFromAppDataFlag: false
+              RenameFilesFlag: false
