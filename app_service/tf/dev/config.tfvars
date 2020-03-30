@@ -1,2 +1,6 @@
 vnet_cidr = "10.1.0.0/16"
 instance = "1"
+data_source_rg_name = "rg_storage_dev_ipeiwkua_001"
+data_source_name = "storagedevipeiwkua001"
+data_source_container_name = "source"
+expiry_hours = "24"

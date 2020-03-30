@@ -1,4 +1,7 @@
 **/*
 !*.tf
 !**/*.tfvars
-!templates/*.yml
+!**/*.json
+!**/*.dat
+!**/*.py
+!**/requirements.txt

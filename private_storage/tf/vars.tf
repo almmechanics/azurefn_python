@@ -17,3 +17,8 @@ variable "instance" {
   description = "instance id"
   type        = string
 }
+
+variable "expiry_hours" {
+  type = string
+  description = "expiry time in hours"
+}

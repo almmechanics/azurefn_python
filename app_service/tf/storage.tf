@@ -13,3 +13,5 @@ resource "azurerm_storage_account" "app_service" {
 
   }
 }
+
+
