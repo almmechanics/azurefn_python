@@ -1,5 +1,3 @@
-
-
 resource "azurerm_app_service_plan" "app_service" {
   name = format("service-plan-%s-%s-%03s", var.environment_name, random_string.random.result, var.instance)
 
@@ -19,6 +17,7 @@ resource "azurerm_app_service_plan" "app_service" {
   }
 }
 
+
 resource "azurerm_function_app" "app_service" {
   name                      = format("azure-function-%s-%s-%03s", var.environment_name, random_string.random.result, var.instance)
   resource_group_name       = azurerm_resource_group.app_service.name
@@ -32,6 +31,14 @@ resource "azurerm_function_app" "app_service" {
     SHARED_ACCESS_SIGNATURE     = "SharedAccessSignature=${data.azurerm_storage_account_sas.source.sas};BlobEndpoint=https://${data.azurerm_storage_account.source.name}.blob.core.windows.net/;"
     FUNCTIONS_EXTENSION_VERSION = "~3"
     FUNCTIONS_WORKER_RUNTIME    = "python"
+    site_config {
+    dotnet_framework_version = "v4.0"
+    scm_type                 = "LocalGit"
+  }           = data.azurerm_storage_account.source.primary_connection_string
+  }
+
+  site_config {
+    always_on = true
   }
 
   tags = {

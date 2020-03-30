@@ -17,7 +17,7 @@ data "azurerm_storage_account_sas" "source" {
     table = false
     file  = false
   }
-  start  = timeadd(timestamp(), "-1h")
+  start  = timeadd(timestamp(), "-15m")
   expiry = timeadd(timestamp(), format("%sh", var.expiry_hours))
 
   permissions {
