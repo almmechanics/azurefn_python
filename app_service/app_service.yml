@@ -19,8 +19,8 @@ stages:
       inputs:
        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app_service/python'
        includeRootFolder: false
-       archiveFile: '$(System.DefaultWorkingDirectory)/app_service$(Date:yyyyMMdd)$(Rev:.r).zip'  
-    - publish: $(System.DefaultWorkingDirectory)/app_service/python
+       archiveFile: '$(System.DefaultWorkingDirectory)/app_service/app_service$(Date:yyyyMMdd)$(Rev:.r).zip'  
+    - publish: $(System.DefaultWorkingDirectory)/app_service
       artifact: drop
 
 - stage: dev  
