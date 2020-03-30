@@ -5,7 +5,7 @@ import azure.functions as func
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Python HTTP trigger function processed a request. update')
     logging.info(os.environ['SHARED_ACCESS_SIGNATURE'])        
 
     name = req.params.get('name')
