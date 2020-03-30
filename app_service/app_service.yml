@@ -15,9 +15,8 @@ stages:
     displayName: 'Create app_service artifact'
     pool: private
     steps:
-    - script: 'pip install pytest pylint'
-      displayName: 'Add PyTest and pylint'
-      continueOnError: true
+    - script: python -m pip install --upgrade pip setuptools wheel pytest pylint
+      displayName: 'Install tools'
 
     - script: 'pytest -rs $(System.DefaultWorkingDirectory)/ci/test_file_has_no_pylint_errors.py --junitxml=$(System.DefaultWorkingDirectory)/test-pylint.xml'
       displayName: 'Run Pytest extract'
