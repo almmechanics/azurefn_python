@@ -1,7 +1,4 @@
 **/*
 !*.tf
 !**/*.tfvars
-!**/*.json
-!**/*.dat
-!**/*.py
-!**/requirements.txt
+!**/*.zip

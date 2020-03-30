@@ -15,7 +15,11 @@ stages:
     displayName: 'Create app_service artifact'
     pool: private
     steps:
-    - publish: $(System.DefaultWorkingDirectory)/app_service
+    - task: ArchiveFiles@2
+      inputs:
+       rootFolderOrFile: '$(Build.BinariesDirectory)' 
+       includeRootFolder: false
+    - publish: $(System.DefaultWorkingDirectory)/app_service/python
       artifact: drop
 
 - stage: dev  
