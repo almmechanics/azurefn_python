@@ -18,9 +18,9 @@ Concatenate multiple permissions, such as "rwa" = Read, Write, Add
 
 Sample Request Body
  {
-    'permission': "rl",
-    'container': "functions",
-    'blobname': "yokawasa.png"
+    "permission": "rl",
+    "container": "shared",
+    "blobname": "yokawasa.png"
  }
 
 [Response body format]
