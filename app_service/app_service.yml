@@ -17,8 +17,9 @@ stages:
     steps:
     - task: ArchiveFiles@2
       inputs:
-       rootFolderOrFile: $(System.DefaultWorkingDirectory)/app_service/python
+       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app_service/python'
        includeRootFolder: false
+       archiveFile: '$(System.DefaultWorkingDirectory)/app_service$(Date:yyyyMMdd)$(Rev:.r).zip'  
     - publish: $(System.DefaultWorkingDirectory)/app_service/python
       artifact: drop
 
