@@ -16,24 +16,6 @@ stages:
     pool: private
     steps:
 
-    # - task: UsePythonVersion@0
-    #   inputs:
-    #     versionSpec: '3.x'
-    #     addToPath: true
-    #     architecture: 'x64'
-
-    # - script: python -m pip install --upgrade pip setuptools wheel pytest pylint
-    #   displayName: 'Install tools'
-
-    # - script: 'pytest -rs $(System.DefaultWorkingDirectory)/ci/test_file_has_no_pylint_errors.py --junitxml=$(System.DefaultWorkingDirectory)/test-pylint.xml'
-    #   displayName: 'Run Pytest extract'
-    #   continueOnError: true
-
-    # - task: PublishTestResults@2
-    #   displayName: 'Publish Test Results **/TEST-*.xml'
-    #   inputs:
-    #     failTaskOnFailedTests: true
-
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app_service/python'
