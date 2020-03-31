@@ -39,34 +39,3 @@ resource "azurerm_storage_container" "source" {
   name                  = "source"
   container_access_type = "blob"
 }
-
-
-
-data "azurerm_storage_account_sas" "source" {
-    connection_string = azurerm_storage_account.source.primary_connection_string
-    https_only        = true
-    resource_types {
-        service   = true
-        container = false
-        object    = false
-    }
-    services {
-        blob  = true
-        queue = false
-        table = false
-        file  = false
-    }
-    start   = timeadd(timestamp(), "-1h")
-    expiry   = timeadd(timestamp(), format("%sh",var.expiry_hours))
-
-    permissions {
-        read    = true
-        write   = true
-        delete  = false
-        list    = false
-        add     = true
-        create  = true
-        update  = false
-        process = false
-    }
-}
